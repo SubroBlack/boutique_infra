@@ -4,8 +4,6 @@ module "gke_cluster" {
   region = var.region
 }
 
-
-
 module "gke_peering" {
   source       = "../../modules/peering"
   name         = "gke_peer"
@@ -20,3 +18,7 @@ module "redis_peering" {
   peer_network = module.gke_cluster.vpc_gke_output.self_link
 }
 
+
+#need to work on this peering later considering that the network needs to exist before it can be peered
+
+#how to create two networks in different projects under one tfstate file???
