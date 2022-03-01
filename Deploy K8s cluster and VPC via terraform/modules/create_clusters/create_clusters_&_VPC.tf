@@ -16,12 +16,17 @@ resource "google_container_cluster" "primary" {                               //
     }
     tags = ["foo", "bar"]
   }
+  
+  ip_allocation_policy {
+    cluster_ipv4_cidr_block  = "/20"
+    services_ipv4_cidr_block = "/20"
+  }
   timeouts {
     create = "30m"
     update = "40m"
   }
 
-  master_auth {
+  master_auth 
   client_certificate_config {
     issue_client_certificate = true
    }
