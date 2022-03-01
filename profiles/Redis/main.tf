@@ -1,4 +1,4 @@
 module "redis" {
-  source = "../modules/Redis"
+  source = "../../modules/Redis"
   region = var.region
 }
