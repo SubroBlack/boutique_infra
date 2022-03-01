@@ -1,4 +1,0 @@
-**/terraform.tfstat*
-**/.terraform/
-**/backend.tf
-**/terraform.tfvars
