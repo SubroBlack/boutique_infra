@@ -5,7 +5,7 @@ resource "google_container_cluster" "primary" {                               //
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in custom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in custom subnetwork                                              // node count in each zone. 
   
-  ip_allocation_policy {
+  ip_allocation_policy {                          // ip aliasing for the redis connection
     cluster_secondary_range_name  = "services-range"
     services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
   }
