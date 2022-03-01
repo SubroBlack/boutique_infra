@@ -1,0 +1,7 @@
+./Deploy K8s cluster and VPC via terraform/.terraform
+
+./Deploy K8s cluster and VPC via terraform/.terraform.lock.hcl
+
+./Deploy K8s cluster and VPC via terraform/terraform.tfstate
+
+./Deploy K8s cluster and VPC via terraform/terraform.tfstate.backup
