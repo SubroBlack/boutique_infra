@@ -38,6 +38,16 @@ resource "google_compute_subnetwork" "gke-subnet" {
   ip_cidr_range = "10.2.0.0/16"
   region        = "us-central1"
   network       = google_compute_network.vpc_network_gke.name
+
+  secondary_ip_range {
+    range_name    = "services-range"
+    ip_cidr_range = "10.3.0.0/16"
+  }
+
+  secondary_ip_range {  
+    range_name    = "pod-ranges"
+    ip_cidr_range = "10.4.0.0/16"
+  }
 }
 
 # resource "google_compute_subnetwork" "redis-subnet" {
@@ -54,6 +64,11 @@ resource "google_container_cluster" "primary" { // creates google kubernetes clu
   initial_node_count = 3
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in ustom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in ustom subnetwork 
+
+  ip_allocation_policy {
+    # cluster_secondary_range_name = "service-range"
+    services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range.1.range_name
+  }
 
   node_config {
     preemptible  = true
