@@ -1,6 +1,5 @@
-terraform {
-  backend "gcs" {
-    bucket = "terraform_state_bucket_uwa"
-    prefix = "terraform/gke_tfstate"
-  }
+provider "google" {
+    project = var.project_id
+    region = var.region
 }
+
