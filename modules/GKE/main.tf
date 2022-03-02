@@ -1,6 +1,7 @@
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
   name               = var.cluster_name
   location           = var.region
+  project            = var.project_1
   initial_node_count = 1         
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in custom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in custom subnetwork                                              // node count in each zone. 
@@ -35,7 +36,7 @@ resource "google_container_cluster" "primary" {                               //
     resource_limits {
       resource_type = "cpu"
       minimum = 1
-      maximum = 6
+      maximum = 3
     }
     resource_limits {
       resource_type = "memory"
@@ -50,6 +51,7 @@ resource "google_container_cluster" "primary" {                               //
 resource "google_compute_network" "vpc_network_gke" {
   name                    = "gke-vpc"
   auto_create_subnetworks = false
+  project            = var.project_1
 }
 
 resource "google_compute_subnetwork" "gke-subnet" {
@@ -59,12 +61,29 @@ resource "google_compute_subnetwork" "gke-subnet" {
   network       = google_compute_network.vpc_network_gke.name
   secondary_ip_range {
     range_name    = "services-range"
-    ip_cidr_range = "192.168.1.0/24"
+    ip_cidr_range = "10.24.0.0/20"
     }
   secondary_ip_range {
     range_name    = "pod-range"
-    ip_cidr_range = "192.168.64.0/22"
+    ip_cidr_range = "10.28.0.0/20"
   }
+}
+
+
+resource "google_compute_firewall" "gke" {
+  name    = "ingress-firewall-gke"
+  network = google_compute_network.vpc_network_gke.name
+  direction = "INGRESS"
+  source_ranges = ["0.0.0.0/0"]
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
 }
 
 
