@@ -11,3 +11,39 @@ variable "project_1" {
   description = "id of the project for deployment"
 }
 
+variable "project_2" {
+  type = string
+  description = "id of the project for deployment"
+}
+
+variable "peer_name_1" {
+  description = "Name of the first peer"
+  type = string
+}
+
+variable "peer_name_2" {
+  description = "Name of the second peer"
+  type = string
+}
+
+
+variable "zone" {
+  description = "network zone"
+  type = string
+}
+variable "machine_type" {
+  type = string
+  description = "Type of virtual machine"
+  
+}
+variable "vm_name" {
+  type = string
+  description = "Name of the virtual machine"
+}
+variable "boot_disk_image" {
+  type = string
+  description = "Boot disk image"
+ 
+}
+
+
