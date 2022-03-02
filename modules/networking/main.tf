@@ -12,6 +12,8 @@ resource "google_compute_subnetwork" "GKE_subnet" {
   network       = google_compute_network.GKE_network.name
 }
 
+/*
+
 # REDIS network
 resource "google_compute_network" "Redis_network" {
   name       = "${var.name}-${var.random_string}-redis-network-${var.env}"
@@ -38,3 +40,5 @@ module "redis_peering" {
   network      = google_compute_network.Redis_network.self_link
   peer_network = google_compute_network.GKE_network.self_link
 }
+
+*/

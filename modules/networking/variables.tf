@@ -1,8 +1,3 @@
-variable "project_id" {
-  description = "GCP Project ID"
-  type        = string
-}
-
 variable "name" {
   description = "name prefix for resources"
   type        = string
@@ -20,5 +15,10 @@ variable "region" {
 
 variable "env" {
   description = "Environment to run the Deployment at"
+  type        = string
+}
+
+variable "project_id" {
+  description = "GCP Project ID"
   type        = string
 }

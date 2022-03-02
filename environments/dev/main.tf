@@ -10,7 +10,7 @@ terraform {
 provider "google" {
   //credentials = file("<NAME>.json")
   project = var.project_id
-  region = var.region
+  region  = var.region
 }
 
 # Module to generate random string
@@ -45,5 +45,5 @@ resource "google_redis_instance" "Redis" {
   location_id        = var.zone
   memory_size_gb     = 1
   project            = var.project_id
-  authorized_network = module.Networking.Redis_network_name
+  authorized_network = module.Networking.GKE_network_name
 }
