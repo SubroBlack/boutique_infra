@@ -32,6 +32,5 @@ resource "google_compute_network_peering" "redis-gke" {
 
 
 
-#need to work on this peering later considering that the network needs to exist before it can be peered
 
-#how to create two networks in different projects under one tfstate file???
+
