@@ -19,7 +19,12 @@ variable "name" {
 }
 
 variable "region" {
-  description = "The location region/zone where the cluster should be deployed"
+  description = "The region where the resource should be deployed"
+  type        = string
+}
+
+variable "zone" {
+  description = "The zone where the resource should be deployed"
   type        = string
 }
 
