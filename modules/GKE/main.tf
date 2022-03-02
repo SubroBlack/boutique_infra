@@ -102,3 +102,7 @@ resource "kubernetes_namespace" "production" {
   }
 }
 
+#resource for vm with nutcracker startup script 
+#in nutcracker startup script specify ip address
+
+#the nutcracker vm depends on the redis instance ip 

@@ -6,3 +6,4 @@ variable "region" {
   type = string
   description = "Name of the cluster region"
 }
+

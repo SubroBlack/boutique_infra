@@ -1,4 +1,4 @@
-variable "project_id" {
+variable "project_2" {
   type = string
   description = "id of the project for deployment"
 }
