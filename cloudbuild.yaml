@@ -1,0 +1,45 @@
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+    echo "***********************"
+    echo "The Commit was made in the branch: "
+    echo "$BRANCH_NAME"
+    echo "***********************"
+# Terraform initialize
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+    if [ $BRANCH_NAME = black ]; then
+      cd environments/dev
+      echo "The dir is changed"
+      terraform init
+    fi
+# Terraform Plan
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+    if [ $BRANCH_NAME = black ]; then
+      cd environments/dev
+      terraform plan
+    fi
+# Terraform Apply
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+    if [ $BRANCH_NAME = black ]; then
+      cd environments/dev
+      terraform apply -auto-approve
+    fi
