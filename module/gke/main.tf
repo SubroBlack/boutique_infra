@@ -121,8 +121,39 @@ resource "kubernetes_namespace" "production" {
   }
 }
 
-# locals {
-#   cluster-certificate = google_container_cluster.primary.master_auth[0].cluster_ca_certificate
-#   cluster-endpoint = google_container_cluster.primary.endpoint
-#   cluster-id = google_container_cluster.primary.id
-# }
+# for the private service access that the redis instance needs for communication
+resource "google_compute_global_address" "private_ip_alloc" {
+  name          = "private-ip-alloc"
+  # project       = var.project_1
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.vpc_network_gke.id
+}
+
+resource "google_service_networking_connection" "private_service_connection" {
+  network                 = google_compute_network.vpc_network_gke.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
+}
+
+#redis instance 
+
+resource "google_redis_instance" "cache" {
+  name           = "private-cache"
+  tier           = "STANDARD_HA"
+  # project         = var.project_1
+  memory_size_gb = 1
+
+  location_id             = "us-west1-a"
+  alternative_location_id = "us-west1-b"
+
+  authorized_network = google_compute_network.vpc_network_gke.id
+  connect_mode       = "PRIVATE_SERVICE_ACCESS"
+
+  redis_version     = "REDIS_4_0"
+  display_name      = "Terraform Test Instance"
+
+  depends_on = [google_service_networking_connection.private_service_connection]
+
+}

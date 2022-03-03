@@ -1,4 +1,4 @@
-project_id = "test-project-ws-342013"
+project_id = "***"
 
 region = "us-west1"
 
