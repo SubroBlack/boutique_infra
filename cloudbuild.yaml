@@ -70,7 +70,7 @@ steps:
   - | 
       if [ -d "env/$BRANCH_NAME/" ]; then
         cd profiles/GKE     
-        terraform destroy -var-file="./../../env/$BRANCH_NAME/development.tfvars" -auto-approve
+        terraform apply -var-file="./../../env/$BRANCH_NAME/development.tfvars" -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
