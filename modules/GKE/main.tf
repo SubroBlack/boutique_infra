@@ -1,3 +1,7 @@
+locals {
+ redis_ip = "${google_redis_instance.cache.host}"
+}
+
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
   name               = var.cluster_name
   location           = var.region
@@ -125,3 +129,41 @@ resource "kubernetes_namespace" "production" {
 #in nutcracker startup script specify ip address
 
 #the nutcracker vm depends on the redis instance ip 
+
+# for the private service access that the redis instance needs for communication
+resource "google_compute_global_address" "private_ip_alloc" {
+  name          = "private-ip-alloc"
+  #project       = var.project_2
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.vpc_network_gke.id
+}
+
+resource "google_service_networking_connection" "private_service_connection" {
+  network                 = google_compute_network.vpc_network_gke.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
+}
+
+
+#redis instance 
+
+resource "google_redis_instance" "cache" {
+  name           = "private-cache"
+  tier           = "STANDARD_HA"
+  #project         = var.project_2
+  memory_size_gb = 1
+
+  location_id             = "europe-north1-a"
+  alternative_location_id = "europe-north1-b"
+
+  authorized_network = google_compute_network.vpc_network_gke.id
+  connect_mode       = "PRIVATE_SERVICE_ACCESS"
+
+  redis_version     = "REDIS_4_0"
+  display_name      = "Terraform Test Instance"
+
+  depends_on = [google_service_networking_connection.private_service_connection]
+
+}

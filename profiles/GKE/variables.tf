@@ -31,19 +31,6 @@ variable "zone" {
   description = "network zone"
   type = string
 }
-variable "machine_type" {
-  type = string
-  description = "Type of virtual machine"
-  
-}
-variable "vm_name" {
-  type = string
-  description = "Name of the virtual machine"
-}
-variable "boot_disk_image" {
-  type = string
-  description = "Boot disk image"
- 
-}
+
 
 

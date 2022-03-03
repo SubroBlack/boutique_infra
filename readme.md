@@ -1,1 +1,1 @@
-please don't mind my commit messages...they are not desxcriptive of what is actually going on :)
+please don't mind my commit messages...they are not descriptive of what is actually going on :)

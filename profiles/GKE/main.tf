@@ -10,10 +10,7 @@ module "redis" {
   source = "../../modules/Redis"
   region = var.region
   project_2 = var.project_2
-  vm_name   = var.vm_name
-  machine_type = var.machine_type
-  zone         = var.zone
-  boot_disk_image= var.boot_disk_image
+  
 }
 
 
