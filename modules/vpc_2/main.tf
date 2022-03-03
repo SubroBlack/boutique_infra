@@ -9,7 +9,7 @@ resource "google_compute_network" "vpc_network_2" {
 resource "google_compute_subnetwork" "vpc_2_subnet" {
   name          = "vpc-2-subnet"
   ip_cidr_range = "10.8.0.0/16"
-  project            = var.project_2
+  project       = var.project_2
   region        = var.region
   network       = google_compute_network.vpc_network_2.name
   secondary_ip_range {

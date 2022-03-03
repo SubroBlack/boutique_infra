@@ -1,5 +1,44 @@
-locals {
- redis_ip = "${google_redis_instance.cache.host}"
+#locals {
+# redis_ip = "${google_redis_instance.cache.host}"
+#}
+
+
+resource "google_compute_network" "vpc_network_gke" {
+  name                    = "gke-vpc"
+  auto_create_subnetworks = false
+  project            = var.project_1
+}
+
+resource "google_compute_subnetwork" "gke-subnet" {
+  name          = "gke-vpc-subnet"
+  ip_cidr_range = "10.2.0.0/16"
+  region        = var.region
+  network       = google_compute_network.vpc_network_gke.name
+  secondary_ip_range {
+    range_name    = "services-range"
+    ip_cidr_range = "10.24.0.0/20"
+    }
+  secondary_ip_range {
+    range_name    = "pod-range"
+    ip_cidr_range = "10.28.0.0/20"
+  }
+}
+
+
+resource "google_compute_firewall" "gke" {
+  name    = "ingress-firewall-gke"
+  network = google_compute_network.vpc_network_gke.name
+  direction = "INGRESS"
+  source_ranges = ["0.0.0.0/0"]
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
 }
 
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
@@ -51,45 +90,6 @@ resource "google_container_cluster" "primary" {                               //
 
   depends_on = [google_compute_network.vpc_network_gke]
 }
-
-resource "google_compute_network" "vpc_network_gke" {
-  name                    = "gke-vpc"
-  auto_create_subnetworks = false
-  project            = var.project_1
-}
-
-resource "google_compute_subnetwork" "gke-subnet" {
-  name          = "gke-vpc-subnet"
-  ip_cidr_range = "10.2.0.0/16"
-  region        = var.region
-  network       = google_compute_network.vpc_network_gke.name
-  secondary_ip_range {
-    range_name    = "services-range"
-    ip_cidr_range = "10.24.0.0/20"
-    }
-  secondary_ip_range {
-    range_name    = "pod-range"
-    ip_cidr_range = "10.28.0.0/20"
-  }
-}
-
-
-resource "google_compute_firewall" "gke" {
-  name    = "ingress-firewall-gke"
-  network = google_compute_network.vpc_network_gke.name
-  direction = "INGRESS"
-  source_ranges = ["0.0.0.0/0"]
-  allow {
-    protocol = "icmp"
-  }
-
-  allow {
-    protocol = "tcp"
-    ports    = ["0-65535"]
-  }
-
-}
-
 
 
 resource "kubernetes_namespace" "development" {

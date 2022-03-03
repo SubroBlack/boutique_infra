@@ -27,10 +27,6 @@ variable "peer_name_2" {
 }
 
 
-variable "zone" {
-  description = "network zone"
-  type = string
-}
 
 
 
