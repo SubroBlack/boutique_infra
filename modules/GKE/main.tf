@@ -133,7 +133,7 @@ resource "kubernetes_namespace" "production" {
 # for the private service access that the redis instance needs for communication
 resource "google_compute_global_address" "private_ip_alloc" {
   name          = "private-ip-alloc"
-  #project       = var.project_2
+  project       = var.project_1
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
@@ -152,7 +152,7 @@ resource "google_service_networking_connection" "private_service_connection" {
 resource "google_redis_instance" "cache" {
   name           = "private-cache"
   tier           = "STANDARD_HA"
-  #project         = var.project_2
+  project         = var.project_1
   memory_size_gb = 1
 
   location_id             = "europe-north1-a"

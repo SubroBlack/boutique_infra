@@ -3,14 +3,12 @@ module "gke_cluster" {
   cluster_name = var.cluster_name
   region = var.region
   project_1 = var.project_1
-
 }
 
 module "redis" {
   source = "../../modules/Redis"
   region = var.region
-  project_2 = var.project_2
-  
+  project_2 = var.project_2 
 }
 
 
