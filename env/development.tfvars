@@ -9,5 +9,5 @@ cluster_name="gke-boutique-cluster"
 #vm_name= "nutcracker-vm"
 #boot_disk_image= "debian-cloud/debian-9"
 peer_name_1= "gke-peer"
-peer_name_2= "redis-peer"
+peer_name_2= "vpc2-peer"
 
