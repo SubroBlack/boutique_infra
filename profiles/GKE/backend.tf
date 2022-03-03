@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform_state_bucket_uwa"
+    bucket = "trial-bucket-microservices"
     prefix = "terraform/team-2"
   }
 }
