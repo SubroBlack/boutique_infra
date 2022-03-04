@@ -19,3 +19,18 @@ resource "google_container_cluster" "primary" {
   network = var.network
   subnetwork = var.subnetwork
 }
+
+# Namespace in the cluster for respective env virtual clusters
+resource "kubernetes_namespace" "env" {
+  metadata {
+    annotations = {
+      name = var.env
+    }
+
+    labels = {
+      env = var.env
+    }
+
+    name = var.env
+  }
+}

@@ -33,9 +33,10 @@ module "Networking" {
 module "GKE_cluster" {
   source     = "../../modules/clusters"
   project_id = var.project_id
-  name       = "${var.name}-${module.random.random_string}-gke-cluster-${var.env}"
+  name       = "${var.name}-${module.random.random_string}-gke-cluster"
   network    = module.Networking.GKE_network.self_link
   subnetwork = module.Networking.GKE_subnetwork.self_link
+  env = var.env
 }
 
 
