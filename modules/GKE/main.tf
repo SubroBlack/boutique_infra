@@ -89,6 +89,7 @@ resource "google_container_cluster" "primary" {                               //
     }
   }
   remove_default_node_pool = true
+  
 
   depends_on = [google_compute_network.vpc_network_gke]
 }
