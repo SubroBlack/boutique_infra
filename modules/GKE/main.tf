@@ -80,12 +80,12 @@ resource "google_container_cluster" "primary" {                               //
     resource_limits {
       resource_type = "cpu"
       minimum = 1
-      maximum = 6
+      maximum = 10
     }
     resource_limits {
       resource_type = "memory"
       minimum = 4
-      maximum = 16
+      maximum = 100
     }
   }
   remove_default_node_pool = true
