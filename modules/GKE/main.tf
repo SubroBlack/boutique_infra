@@ -5,8 +5,7 @@ locals {
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
   name               = var.cluster_name
   location           = var.region
-  project            = var.project_1
-  initial_node_count = 1         
+  project            = var.project_1       
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in custom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in custom subnetwork                                              // node count in each zone. 
   
@@ -14,13 +13,10 @@ resource "google_container_cluster" "primary" {                               //
     cluster_secondary_range_name  = "services-range"
     services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
   }
-  node_config {
-    preemptible  = true
-    machine_type = "g1-small"                                                 //f1-micro does not have enough memory to support GKE. The smallest machine that supports GKE is g1-small
+                                
+  remove_default_node_pool = true
+  initial_node_count       = 1
 
-    remove_default_node_pool = true
-    initial_node_count       = 1
- }
   timeouts {
     create = "30m"
     update = "40m"
