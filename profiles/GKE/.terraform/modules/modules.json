@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"redis","Source":"../../modules/Redis","Dir":"../../modules/Redis"},{"Key":"redis_peering","Source":"../../modules/peering","Dir":"../../modules/peering"},{"Key":"","Source":"","Dir":"."},{"Key":"gke_cluster","Source":"../../modules/GKE","Dir":"../../modules/GKE"},{"Key":"gke_peering","Source":"../../modules/peering","Dir":"../../modules/peering"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gke_cluster","Source":"../../modules/GKE","Dir":"../../modules/GKE"},{"Key":"redis","Source":"../../modules/Redis","Dir":"../../modules/Redis"}]}

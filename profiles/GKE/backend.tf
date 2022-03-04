@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "terraform_state_bucket_uwa"
+    bucket = "infra-microservices-test-342013"
     prefix = "terraform/gke_tfstate"
   }
 }

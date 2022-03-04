@@ -1,6 +1,6 @@
 region= "europe-north1"
-project_1= "team-2-a"
-project_2= "team-2-b"
+project_1= "microservices-test-342013"
+project_2= "microservices-test2"
 cluster_name="gke-boutique-cluster"
 zone= "europe-north1-a"
 machine_type= "e2-medium"
