@@ -53,6 +53,7 @@ resource "google_container_cluster" "primary" {                               //
     cluster_secondary_range_name  = "services-range"
     services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
   }
+
   node_config {
     preemptible  = true
     machine_type = "g1-small"                                                 //f1-micro does not have enough memory to support GKE. The smallest machine that supports GKE is g1-small
@@ -79,7 +80,7 @@ resource "google_container_cluster" "primary" {                               //
     resource_limits {
       resource_type = "cpu"
       minimum = 1
-      maximum = 3
+      maximum = 6
     }
     resource_limits {
       resource_type = "memory"
@@ -87,10 +88,28 @@ resource "google_container_cluster" "primary" {                               //
       maximum = 16
     }
   }
+  remove_default_node_pool = true
 
   depends_on = [google_compute_network.vpc_network_gke]
 }
 
+resource "google_container_node_pool" "primary_preemptible_nodes" {
+  name       = "my-node-pool"
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = 1
+
+  node_config {
+    preemptible  = true
+    machine_type = "e2-medium"
+
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+   #service_account = google_service_account.default.email
+    oauth_scopes    = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
+}
 
 resource "kubernetes_namespace" "development" {
   metadata {
