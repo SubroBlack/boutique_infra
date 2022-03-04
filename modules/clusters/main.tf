@@ -21,11 +21,8 @@ resource "google_container_cluster" "primary" {
 }
 
 # Namespace in the cluster for respective env virtual clusters
-resource "kubernetes_namespace_v1" "namespace" {
+resource "kubernetes_namespace" "env" {
   metadata {
-    annotations = {
-      name = var.env
-    }
 
     labels = {
       env = var.env
