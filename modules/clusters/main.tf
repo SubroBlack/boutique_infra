@@ -45,4 +45,5 @@ resource "kubernetes_namespace" "dev" {
 
     name = "dev"
   }
+  depends_on = [ google_container_cluster.primary ]
 }
