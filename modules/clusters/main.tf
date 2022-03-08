@@ -7,6 +7,11 @@ resource "google_container_cluster" "primary" {
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
 
+  remove_default_node_pool = true
+  initial_node_count       = 1
+  network = var.network
+  subnetwork = var.subnetwork
+
   node_config {
     preemptible  = true
     machine_type = "g1-small"
@@ -14,10 +19,31 @@ resource "google_container_cluster" "primary" {
     disk_size_gb = 50
   }
 
-  #remove_default_node_pool = true
-  initial_node_count       = var.initial_node_count
-  network = var.network
-  subnetwork = var.subnetwork
+  ip_allocation_policy {
+    cluster_ipv4_cidr_block  = "/20"
+    services_ipv4_cidr_block = "/20"
+  }
+
+  master_auth {
+    client_certificate_config {
+      issue_client_certificate = true
+    }
+  }
+
+  cluster_autoscaling {                                                       // cluster is auto scaleable
+    enabled = true
+    resource_limits {
+      resource_type = "cpu"
+      minimum = 1
+      maximum = 6
+    }
+    resource_limits {
+      resource_type = "memory"
+      minimum = 4
+      maximum = 16
+    }
+  }
+
 }
 
 # Namespace in the cluster for respective env virtual clusters
@@ -36,6 +62,7 @@ resource "kubernetes_namespace_v1" "namespace" {
   }
 }
 */
+
 resource "kubernetes_namespace" "dev" {
   metadata {
 
@@ -45,5 +72,4 @@ resource "kubernetes_namespace" "dev" {
 
     name = "dev"
   }
-  depends_on = [ google_container_cluster.primary ]
 }

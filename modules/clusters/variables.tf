@@ -3,12 +3,6 @@ variable "name" {
   type        = string
 }
 
-variable "initial_node_count" {
-  description = "Number of initial nodes in the cluster"
-  type = number
-  default = 3
-}
-
 variable "network" {
     description = "The network to which the cluster would belong"
     type = string
