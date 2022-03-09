@@ -30,7 +30,7 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-  cluster_autoscaling {                                                       // cluster is auto scaleable
+  cluster_autoscaling {             // cluster is auto scaleable
     enabled = true
     resource_limits {
       resource_type = "cpu"
@@ -47,8 +47,7 @@ resource "google_container_cluster" "primary" {
 }
 
 # Namespace in the cluster for respective env virtual clusters
-/*
-resource "kubernetes_namespace_v1" "namespace" {
+resource "kubernetes_namespace_v1" "env" {
   metadata {
     annotations = {
       name = var.env
@@ -61,8 +60,8 @@ resource "kubernetes_namespace_v1" "namespace" {
     name = var.env
   }
 }
-*/
 
+/*
 resource "kubernetes_namespace" "dev" {
   metadata {
 
@@ -73,3 +72,4 @@ resource "kubernetes_namespace" "dev" {
     name = "dev"
   }
 }
+*/
