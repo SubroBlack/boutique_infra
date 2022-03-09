@@ -61,7 +61,7 @@ resource "kubernetes_namespace_v1" "env" {
   }
 }
 
-/*
+ /* 
 resource "kubernetes_namespace" "dev" {
   metadata {
 
@@ -72,4 +72,4 @@ resource "kubernetes_namespace" "dev" {
     name = "dev"
   }
 }
-*/
+ */
