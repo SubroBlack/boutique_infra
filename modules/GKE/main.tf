@@ -53,7 +53,13 @@ resource "google_container_cluster" "primary" {                               //
     cluster_secondary_range_name  = "services-range"
     services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
   }
-
+  
+  private_cluster_config {
+    enable_private_nodes = true
+    enable_private_endpoint = false
+    master_ipv4_cidr_block = "10.5.6.0/28"
+  }
+  
   node_config {
     preemptible  = true
     machine_type = "g1-small"                                                 //f1-micro does not have enough memory to support GKE. The smallest machine that supports GKE is g1-small
