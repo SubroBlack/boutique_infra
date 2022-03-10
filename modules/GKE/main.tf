@@ -49,17 +49,18 @@ resource "google_container_cluster" "primary" {                               //
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in custom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in custom subnetwork                                              // node count in each zone. 
   
-  ip_allocation_policy {                          // ip aliasing for the redis connection
-    cluster_secondary_range_name  = "services-range"
-    services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
-  }
-  
   private_cluster_config {
     enable_private_nodes = true
     enable_private_endpoint = false
     master_ipv4_cidr_block = "10.5.6.0/28"
   }
   
+  ip_allocation_policy {                          // ip aliasing for the redis connection
+    cluster_secondary_range_name  = "services-range"
+    services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
+  }
+  
+
   node_config {
     preemptible  = true
     machine_type = "g1-small"                                                 //f1-micro does not have enough memory to support GKE. The smallest machine that supports GKE is g1-small
@@ -72,8 +73,8 @@ resource "google_container_cluster" "primary" {                               //
 #    tags = ["foo", "bar"]
  }
   timeouts {
-    create = "30m"
-    update = "40m"
+    create = "60m"
+    update = "60m"
   }
 
   master_auth {
@@ -104,7 +105,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 5
+  node_count = 3
 
   node_config {
     preemptible  = true
