@@ -18,6 +18,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(
     module.gke_cluster.output-cluster-certificate
   )
-  config_path    = "~/.kube/config"
+  # config_path    = "~/.kube/config"
 }
 data "google_client_config" "default" {}
