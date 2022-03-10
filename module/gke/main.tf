@@ -1,10 +1,14 @@
+# ------- Cluster ---------
+
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
   name               = var.cluster_name
   location           = var.region
-  initial_node_count = 1         
   network            = google_compute_network.vpc_network_gke.self_link
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   
   
+  initial_node_count = 1
+  remove_default_node_pool = true
+
   node_config {
     preemptible  = true
     machine_type = "g1-small"     //f1-micro does not have enough memory to support GKE.
@@ -19,9 +23,18 @@ resource "google_container_cluster" "primary" {                               //
   }
   
   ip_allocation_policy {
-    cluster_ipv4_cidr_block  = "/20"
-    services_ipv4_cidr_block = "/20"
+    cluster_secondary_range_name  = "services-range"
+    services_secondary_range_name = google_compute_subnetwork.gke-subnet.secondary_ip_range[1].range_name
   }
+
+  # google_compute_subnetwork.gke-subnet.secondary_ip_range[0].range_name
+
+  private_cluster_config {
+    enable_private_endpoint = false
+    enable_private_nodes = true
+    master_ipv4_cidr_block = "10.30.0.0/28"
+  }
+
   timeouts {
     create = "30m"
     update = "40m"
@@ -50,6 +63,28 @@ resource "google_container_cluster" "primary" {                               //
   depends_on = [google_compute_network.vpc_network_gke]
 }
 
+# ------- Nodepool --------
+
+resource "google_container_node_pool" "primary_preemptible_nodes" {
+  name       = "my-node-pool"
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = 5
+
+  node_config {
+    preemptible  = true
+    machine_type = "e2-medium"
+
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+   #service_account = google_service_account.default.email
+    oauth_scopes    = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
+}
+
+# ------- Networks --------
+
 resource "google_compute_network" "vpc_network_gke" {
   name                    = "gke-vpc"
   auto_create_subnetworks = false
@@ -65,6 +100,7 @@ resource "google_compute_subnetwork" "gke-subnet" {
     range_name    = "services-range"
     ip_cidr_range = "10.24.0.0/20"
   }
+
   secondary_ip_range {
     range_name    = "pod-range"
     ip_cidr_range = "10.28.0.0/20"
@@ -87,6 +123,8 @@ resource "google_compute_firewall" "gke" {
   
   depends_on = [google_compute_network.vpc_network_gke]
 }
+
+# ------- Namespaces -------
 
 resource "kubernetes_namespace" "development" {
   metadata {
@@ -137,7 +175,7 @@ resource "google_service_networking_connection" "private_service_connection" {
   reserved_peering_ranges = [google_compute_global_address.private_ip_alloc.name]
 }
 
-#redis instance 
+# ----- Redis Instance ----- 
 
 resource "google_redis_instance" "cache" {
   name           = "private-cache"
