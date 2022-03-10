@@ -44,7 +44,7 @@ steps:
   - | 
       if [ -d "env/$BRANCH_NAME/" ]; then
         cd profiles/GKE
-        terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars"
+        terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars -lock=false"
       else
         for dir in env/*/
         do 
@@ -70,7 +70,7 @@ steps:
   - | 
       if [ -d "env/$BRANCH_NAME/" ]; then
         cd profiles/GKE     
-        terraform apply -var-file="./../../env/$BRANCH_NAME/development.tfvars" -auto-approve
+        terraform apply -var-file="./../../env/$BRANCH_NAME/development.tfvars" -auto-approve -lock=false
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
