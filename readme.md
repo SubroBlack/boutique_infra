@@ -26,19 +26,19 @@ The aim is to get exposed to as many architecture, security and implementation b
 
 # Sprint Plan
 
-![Sprint Plan Overviwe](sprint-plan.png)
+![Sprint Plan Overviwe](images/sprint-plan.png)
 
 ---
 
 # CI/CD Workflow
 
-![CI/CD Workflow](ci_cd-workflow.png)
+![CI/CD Workflow](images/ci_cd-workflow.png)
 
 ---
 
 # VPC Peering Architecture Diagram
 
-![VPC peering architecture Diagram](vpc-peering.png)
+![VPC peering architecture Diagram](images/vpc-peering.png)
 
 ---
 

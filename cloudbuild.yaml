@@ -1,0 +1,78 @@
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+      echo "***********************"
+      echo "$BRANCH_NAME"
+      echo "***********************"
+# [START tf-init]
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      if [ -d "profiles/gke/" ]; then
+        cd profiles/gke
+        terraform init
+      else
+        for dir in profiles/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${profiles#*/}
+          echo ""
+          echo "*************** TERRAFORM INIT ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform init || exit 1
+          cd ../../
+        done
+      fi 
+# [STOP tf-init]      
+
+# [START tf-plan]
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      if [ -d "profiles/gke/" ]; then
+        cd profiles/gke
+        terraform plan -var-file="variables.tfvars" -lock=false
+      else
+        for dir in profiles/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${profiles#*/}  
+          echo ""
+          echo "*************** TERRAFOM PLAN ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform plan -var-file="variables.tfvars"|| exit 1
+          cd ../../
+        done
+      fi 
+# [END tf-plan]
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      if [ -d "profiles/gke/" ]; then
+        cd profiles/gke     
+        terraform apply -var-file="variables.tfvars" -auto-approve -lock=false
+      else
+        echo "***************************** SKIPPING APPLYING *******************************"
+        echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
+        echo "*******************************************************************************"
+      fi
+# [END tf-apply]

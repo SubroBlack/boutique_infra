@@ -32,7 +32,7 @@ resource "google_container_cluster" "primary" {                               //
   private_cluster_config {
     enable_private_endpoint = false
     enable_private_nodes = true
-    master_ipv4_cidr_block = "10.30.0.0/28"
+    master_ipv4_cidr_block = "10.5.6.0/28"
   }
 
   timeouts {
@@ -66,7 +66,7 @@ resource "google_container_cluster" "primary" {                               //
 # ------- Nodepool --------
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
-  name       = "my-node-pool"
+  name       = "custom-node-pool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
   node_count = 5
@@ -120,8 +120,6 @@ resource "google_compute_firewall" "gke" {
     protocol = "tcp"
     ports    = ["0-65535"]
   }
-  
-  depends_on = [google_compute_network.vpc_network_gke]
 }
 
 # ------- Namespaces -------
