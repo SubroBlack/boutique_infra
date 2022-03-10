@@ -44,7 +44,7 @@ steps:
   - | 
       if [ -d "env/$BRANCH_NAME/" ]; then
         cd profiles/GKE
-        terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars -lock=false"
+        terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars" -lock=false
       else
         for dir in env/*/
         do 
