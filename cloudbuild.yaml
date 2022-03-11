@@ -83,8 +83,10 @@ steps:
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
+  - '-eEuo'
+  - 'pipefail'
   - '-c'
-  - | 
+  - |-
       #!/bin/bash
       if [ -d "env/$BRANCH_NAME/"]; then
         gcloud container clusters get-credentials gke-boutique-cluster --region europe-north1 --project team-2-a
