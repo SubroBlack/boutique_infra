@@ -2,7 +2,7 @@
 Implement GCP’s microservice sample app into a real scenario, working with network setups and a full CICD implementation with strong focus on security.
 The aim is to get exposed to as many architecture, security and implementation best practices, while having fun :)
 
-## Requirements 
+# Requirements 
 
 - IaC ( including Pull requests workflows)
 - Fully automated CI/CD and release management.
@@ -55,3 +55,8 @@ The aim is to get exposed to as many architecture, security and implementation b
 - Implement K8s cluster in VPC 1 via terraform
 
 - Connect Redis IP to cart service configuration of cluster in VPC 1
+
+---
+
+# Sprint 2 accomplishment
+
