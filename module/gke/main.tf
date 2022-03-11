@@ -35,6 +35,12 @@ resource "google_container_cluster" "primary" {                               //
     master_ipv4_cidr_block = "10.5.6.0/28"
   }
 
+  master_authorized_networks_config {
+    cidr_blocks {
+      cidr_block   = "0.0.0.0/0"
+    }
+  }
+
   timeouts {
     create = "30m"
     update = "40m"
