@@ -17,7 +17,7 @@ steps:
   - '-c'
   - |
     if [ $BRANCH_NAME = black ]; then
-      cd environments/dev
+      cd profiles/infra
       echo "The dir is changed"
       terraform init
     fi
@@ -29,7 +29,7 @@ steps:
   - '-c'
   - |
     if [ $BRANCH_NAME = black ]; then
-      cd environments/dev
+      cd profiles/infra
       terraform plan
     fi
 # Terraform Apply
@@ -40,6 +40,6 @@ steps:
   - '-c'
   - |
     if [ $BRANCH_NAME = black ]; then
-      cd environments/dev
-      terraform apply -auto-approve
+      cd profiles/infra
+      terraform apply -var-file="./env/dev.tfvars" -auto-approve -lock=false
     fi

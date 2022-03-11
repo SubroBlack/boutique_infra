@@ -53,34 +53,3 @@ resource "google_service_networking_connection" "private_Redis_connection" {
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.Redis_range.name]
 }
-
-/*
-
-# REDIS network
-resource "google_compute_network" "Redis_network" {
-  name       = "${var.name}-${var.random_string}-redis-network"
-  auto_create_subnetworks = false
-}
-# Redis Subnet
-resource "google_compute_subnetwork" "Redis_subnet" {
-  name          = "${var.name}-${var.random_string}-redis-subnet"
-  ip_cidr_range = "10.3.0.0/16"
-  region        = var.region
-  network       = google_compute_network.Redis_network.name
-}
-
-# Creating a mutual peering among two networks 
-module "gke_peering" {
-  source       = "../../modules/peering"
-  name         = "${var.name}-${var.random_string}-gke-peering"
-  network      = google_compute_network.GKE_network.self_link
-  peer_network = google_compute_network.Redis_network.self_link
-}
-module "redis_peering" {
-  source       = "../../modules/peering"
-  name         = "${var.name}-${var.random_string}-redis-peering"
-  network      = google_compute_network.Redis_network.self_link
-  peer_network = google_compute_network.GKE_network.self_link
-}
-
-*/

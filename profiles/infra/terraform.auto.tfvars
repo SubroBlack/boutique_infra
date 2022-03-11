@@ -1,0 +1,7 @@
+project_id     = "blackbox-342109"
+project_team2a = "team-2-a"
+project_team2b = "team-2-b"
+name           = "boutique"
+env            = "dev"
+region         = "europe-north1"
+zone           = "europe-north1-b"
