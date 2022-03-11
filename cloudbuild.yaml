@@ -43,8 +43,7 @@ steps:
   - | 
     if [ -d "profiles/gke/" ]; then
       cd profiles/gke     
-      terraform apply -var-file="variables
-      tfvars" -auto-approve -lock=false
+      terraform apply -var-file="variables.tfvars" -auto-approve -lock=false
     fi
   timeout: 3600s
 # [END tf-apply]
