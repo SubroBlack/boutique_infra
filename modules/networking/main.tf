@@ -1,12 +1,12 @@
 
 # GKE networks
 resource "google_compute_network" "GKE_network" {
-  name       = "${var.name}-${var.random_string}-gke-network"
+  name       = "${var.name}-gke-network"
   auto_create_subnetworks = false
 }
 # GKE Subnet
 resource "google_compute_subnetwork" "GKE_subnet" {
-  name          = "${var.name}-${var.random_string}-gke-subnet"
+  name          = "${var.name}-gke-subnet"
   ip_cidr_range = "10.2.0.0/16"
   region        = var.region
   network       = google_compute_network.GKE_network.name
@@ -22,7 +22,7 @@ resource "google_compute_subnetwork" "GKE_subnet" {
 
 # Firwall rule to allow ingress
 resource "google_compute_firewall" "gke" {
-  name    = "${var.name}-${var.random_string}-ingress-firewall-gke"
+  name    = "${var.name}-ingress-firewall-gke"
   network = google_compute_network.GKE_network.name
   direction = "INGRESS"
   source_ranges = ["0.0.0.0/0"]
@@ -40,7 +40,7 @@ resource "google_compute_firewall" "gke" {
 
 # Address Range for Private REDIS peering
 resource "google_compute_global_address" "Redis_range" {
-  name          = "${var.name}-${var.random_string}-redis-address-range"
+  name          = "${var.name}-redis-address-range"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16

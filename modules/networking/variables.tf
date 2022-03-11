@@ -3,11 +3,6 @@ variable "name" {
   type        = string
 }
 
-variable "random_string" {
-  description = "Random String for naming purpose"
-  type = string
-}
-
 variable "region" {
   description = "The location region/zone where the cluster should be deployed"
   type        = string

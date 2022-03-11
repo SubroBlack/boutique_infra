@@ -1,13 +1,12 @@
 # Module to generate random string
-module "random" {
+/* module "random" {
   source = "../../modules/random"
-}
+} */
 
 ## Module to create the necessary networks and peering
 module "Networking" {
   source        = "../../modules/networking"
   project_id    = var.project_id
-  random_string = module.random.random_string
   name          = var.name
   region        = var.region
   env           = var.env
@@ -17,7 +16,7 @@ module "Networking" {
 module "GKE_cluster" {
   source         = "../../modules/clusters"
   project_id     = var.project_id
-  name           = "${var.name}-${module.random.random_string}-gke-cluster"
+  name           = "${var.name}-gke-cluster"
   network        = module.Networking.GKE_network
   subnetwork     = module.Networking.GKE_subnetwork
   services_range = module.Networking.GKE_subnetwork.secondary_ip_range[0].range_name
@@ -27,7 +26,7 @@ module "GKE_cluster" {
 
 ## GKE Redis Instant 
 resource "google_redis_instance" "Redis" {
-  name               = "${var.name}-${module.random.random_string}-redis-memory-cache-${var.env}"
+  name               = "${var.name}-redis-memory-cache"
   tier               = "STANDARD_HA"
   location_id        = var.zone
   memory_size_gb     = 1
