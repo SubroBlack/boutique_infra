@@ -122,7 +122,7 @@ resource "google_compute_firewall" "gke" {
 
 
 
-resource "kubernetes_namespace" "development" {
+/* resource "kubernetes_namespace" "development" {
   metadata {
 
     labels = {
@@ -153,7 +153,7 @@ resource "kubernetes_namespace" "production" {
 
     name = "production"
   }
-}
+} */
 
 #resource for vm with nutcracker startup script 
 #in nutcracker startup script specify ip address
