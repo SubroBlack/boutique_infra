@@ -130,38 +130,38 @@ resource "google_compute_firewall" "gke" {
 
 # ------- Namespaces -------
 
-resource "kubernetes_namespace" "development" {
-  metadata {
+# resource "kubernetes_namespace" "development" {
+#   metadata {
 
-    labels = {
-      env = "dev"
-    }
+#     labels = {
+#       env = "dev"
+#     }
 
-    name = "development"
-  }
-}
+#     name = "development"
+#   }
+# }
 
-resource "kubernetes_namespace" "staging" {
-  metadata {
+# resource "kubernetes_namespace" "staging" {
+#   metadata {
 
-    labels = {
-      env = "stg"
-    }
+#     labels = {
+#       env = "stg"
+#     }
 
-    name = "staging"
-  }
-}
+#     name = "staging"
+#   }
+# }
 
-resource "kubernetes_namespace" "production" {
-  metadata {
+# resource "kubernetes_namespace" "production" {
+#   metadata {
 
-    labels = {
-      env = "prod"
-    }
+#     labels = {
+#       env = "prod"
+#     }
 
-    name = "production"
-  }
-}
+#     name = "production"
+#   }
+# }
 
 # for the private service access that the redis instance needs for communication
 resource "google_compute_global_address" "private_ip_alloc" {

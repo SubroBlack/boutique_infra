@@ -15,23 +15,10 @@ steps:
   args: 
   - '-c'
   - |
-      if [ -d "profiles/gke/" ]; then
-        cd profiles/gke
-        terraform init
-      else
-        for dir in profiles/*/
-        do 
-          cd ${dir}   
-          env=${dir%*/}
-          env=${profiles#*/}
-          echo ""
-          echo "*************** TERRAFORM INIT ******************"
-          echo "******* At environment: ${env} ********"
-          echo "*************************************************"
-          terraform init || exit 1
-          cd ../../
-        done
-      fi 
+    if [ -d "profiles/gke/" ]; then
+      cd profiles/gke
+      terraform init
+    fi 
 # [STOP tf-init]      
 
 # [START tf-plan]
@@ -41,23 +28,10 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "profiles/gke/" ]; then
-        cd profiles/gke
-        terraform plan -var-file="variables.tfvars" -lock=false
-      else
-        for dir in profiles/*/
-        do 
-          cd ${dir}   
-          env=${dir%*/}
-          env=${profiles#*/}  
-          echo ""
-          echo "*************** TERRAFOM PLAN ******************"
-          echo "******* At environment: ${env} ********"
-          echo "*************************************************"
-          terraform plan -var-file="variables.tfvars"|| exit 1
-          cd ../../
-        done
-      fi 
+    if [ -d "profiles/gke/" ]; then
+      cd profiles/gke
+      terraform plan -var-file="variables.tfvars" -lock=false
+    fi 
 # [END tf-plan]
 
 # [START tf-apply]
@@ -67,14 +41,29 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "profiles/gke/" ]; then
-        cd profiles/gke     
-        terraform apply -var-file="variables.tfvars" -auto-approve -lock=false
-      else
-        echo "***************************** SKIPPING APPLYING *******************************"
-        echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
-        echo "*******************************************************************************"
-      fi
+    if [ -d "profiles/gke/" ]; then
+      cd profiles/gke     
+      terraform apply -var-file="variables
+      tfvars" -auto-approve -lock=false
+    fi
   timeout: 3600s
-timeout: 3600s
 # [END tf-apply]
+
+
+# [CREATE Namespaces]
+- id : 'create namespace'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+    if [ $BRANCH_NAME = wahid ]; then
+      gcloud container clusters get-credentials infra-test --region us-west1 --project test-project-ws-342013
+      namespaceStatus=$(kubectl get ns $BRANCH_NAME -o json | jq .status.phase -r)
+      if [ $namespaceStatus == "Active" ]
+      then
+        echo "namespace is present"
+      else
+        kubectl create namespace $BRANCH_NAME
+    fi
+timeout: 3600s
