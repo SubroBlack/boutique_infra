@@ -8,9 +8,9 @@ if [ -d "env/$BRANCH_NAME/" ]; then
              echo "namespace is present"
         else
              kubectl create namespace $BRANCH_NAME
-    fi
+    fi;
 else
     echo "***************************** SKIPPING APPLYING *******************************"
     echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
     echo "*******************************************************************************"
-fi
+fi;
