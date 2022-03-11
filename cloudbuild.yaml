@@ -43,7 +43,7 @@ steps:
   - | 
       if [ -f "env/${BRANCH_NAME}.tfvars"]; then
         cd profiles/GKE
-        terraform plan -var-file="./../../env/${BRANCH_NAME}.tfvars"" 
+        terraform plan -var-file="./../../env/${BRANCH_NAME}.tfvars"
       else
         for dir in env/*/
         do 
