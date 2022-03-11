@@ -30,7 +30,7 @@ steps:
   - |
     if [ $BRANCH_NAME = black ]; then
       cd profiles/infra
-      terraform plan -var-file="env/dev.tfvars"
+      terraform plan -var-file="./env/dev.tfvars"
     fi
 # Terraform Apply
 - id: 'tf apply'
@@ -41,5 +41,5 @@ steps:
   - |
     if [ $BRANCH_NAME = black ]; then
       cd profiles/infra
-      terraform apply -var-file="env/dev.tfvars" -auto-approve -lock=false
+      terraform apply -var-file="./env/dev.tfvars" -auto-approve -lock=false
     fi
