@@ -15,7 +15,7 @@ steps:
   args: 
   - '-c'
   - |
-      if [ -d "env/$BRANCH_NAME/" ]; then
+      if [ -f "env/${BRANCH_NAME}.tfvars" ]; then
         cd profiles/GKE
         terraform init
       else
@@ -41,9 +41,9 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "env/$BRANCH_NAME/" ]; then
+      if [ -f "env/${BRANCH_NAME}.tfvars"]; then
         cd profiles/GKE
-        terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars" -lock=false
+        terraform plan -var-file="./../../env/${BRANCH_NAME}.tfvars"" 
       else
         for dir in env/*/
         do 
@@ -54,7 +54,7 @@ steps:
           echo "*************** TERRAFOM PLAN ******************"
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
-          terraform plan -var-file="./../../env/$BRANCH_NAME/development.tfvars"|| exit 1
+          terraform plan -var-file="./../../env/${BRANCH_NAME}.tfvars"|| exit 1
           cd ../../
         done
       fi 
@@ -68,12 +68,34 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "env/$BRANCH_NAME/" ]; then
+      if [ -f "env/${BRANCH_NAME}.tfvars" ]; then
         cd profiles/GKE     
-        terraform apply -var-file="./../../env/$BRANCH_NAME/development.tfvars" -auto-approve -lock=false
+        terraform apply -var-file="./../../env/${BRANCH_NAME}.tfvars" -auto-approve 
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
         echo "*******************************************************************************"
       fi
 # [END tf-apply]
+
+
+- id: 'create namespace'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  timeout: 3600s 
+  args: 
+  - '-c'
+  - | 
+      if [ -f "env/${BRANCH_NAME}.tfvars" ]; then
+        gcloud container clusters get-credentials gke-boutique-cluster --region europe-north1 --project team-2-a
+        namespaceStatus=$(kubectl get ns $BRANCH_NAME -o json | jq .status.phase -r)
+        if [ $namespaceStatus == "Active" ]
+        then
+          echo "namespace is present"
+        else
+          kubectl create namespace $BRANCH_NAME
+      else
+        echo "***************************** SKIPPING APPLYING *******************************"
+        echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
+        echo "*******************************************************************************"
+      fi
