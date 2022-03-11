@@ -36,7 +36,6 @@ steps:
 - id: 'tf apply'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
-  timeout: 1200s
   args: 
   - '-c'
   - |
@@ -44,3 +43,5 @@ steps:
       cd profiles/infra
       terraform apply -var-file="../../env/dev.tfvars" -auto-approve -lock=false
     fi
+  timeout: 1200s
+timeout: 1200s
