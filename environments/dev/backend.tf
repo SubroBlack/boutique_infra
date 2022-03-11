@@ -2,7 +2,7 @@
 
 terraform {
   backend "gcs" {
-      bucket = "boutique-terrastore"
-      prefix = "env/dev"
+    bucket = "boutique-terrastore"
+    prefix = "env/dev"
   }
 }

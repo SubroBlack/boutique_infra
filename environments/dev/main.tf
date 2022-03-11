@@ -16,14 +16,30 @@ module "Networking" {
 
 # GKE cluster
 module "GKE_cluster" {
-  source     = "../../modules/clusters"
-  project_id = var.project_id
-  name       = "${var.name}-${module.random.random_string}-gke-cluster"
-  network    = module.Networking.GKE_network.self_link
-  subnetwork = module.Networking.GKE_subnetwork.self_link
-  env = var.env
+  source         = "../../modules/clusters"
+  project_id     = var.project_id
+  name           = "${var.name}-${module.random.random_string}-gke-cluster"
+  network        = module.Networking.GKE_network
+  subnetwork     = module.Networking.GKE_subnetwork
+  services_range = module.Networking.GKE_subnetwork.secondary_ip_range[0].range_name
+  pods_range     = module.Networking.GKE_subnetwork.secondary_ip_range[1].range_name
+  env            = var.env
 }
 
+
+#GKE private cluster
+/*
+module "prvt_cluster" {
+  source         = "../../modules/private_cluster"
+  project_id     = var.project_id
+  name           = "${var.name}-${module.random.random_string}-gke-cluster"
+  network        = module.Networking.GKE_network
+  subnetwork     = module.Networking.GKE_subnetwork
+  services_range = module.Networking.GKE_subnetwork.secondary_ip_range[0].range_name
+  pods_range     = module.Networking.GKE_subnetwork.secondary_ip_range[1].range_name
+  env            = var.env
+}
+*/
 
 ## GKE Redis Instant 
 resource "google_redis_instance" "Redis" {

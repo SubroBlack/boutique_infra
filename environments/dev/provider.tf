@@ -13,6 +13,8 @@ provider "google" {
   region  = var.region
 }
 
+
+/*
 provider "kubernetes" {
   host  = "https://${module.GKE_cluster.output-cluster-endpoint}"
   token = data.google_client_config.default.access_token
@@ -21,3 +23,17 @@ provider "kubernetes" {
   )
 }
 data "google_client_config" "default" {}
+*/
+
+# Sent by Zak
+/* 
+provider "kubernetes" {
+  host  = "https://${module.GKE_cluster.output_cluster_endpoint}"
+  token = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(
+    module.GKE_cluster.output_cluster_certificate
+  )
+  config_path    = "~/.kube/config"
+}
+data "google_client_config" "default" {}
+ */

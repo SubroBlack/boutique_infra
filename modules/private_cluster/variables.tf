@@ -25,7 +25,7 @@ variable "pods_range" {
     type = string
 }
 
-variable "region" {
+variable "location" {
   description = "The location region/zone where the cluster should be deployed"
   type = string
   default = "europe-north1"

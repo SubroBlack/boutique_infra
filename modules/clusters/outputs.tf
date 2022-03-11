@@ -1,3 +1,4 @@
+
 output "output-cluster-id" {
     value = google_container_cluster.primary.id
     description = "Outputs cluster id"
