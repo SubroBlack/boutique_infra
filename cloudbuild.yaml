@@ -80,7 +80,7 @@ steps:
 
 
 - id: 'create namespace'
-  name: 'hashicorp/terraform:1.0.0'
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: 
   - '-c'
