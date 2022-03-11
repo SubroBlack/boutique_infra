@@ -38,12 +38,12 @@ resource "google_container_cluster" "primary" {                               //
     resource_limits {
       resource_type = "cpu"
       minimum = 1
-      maximum = 6
+      maximum = 10
     }
     resource_limits {
       resource_type = "memory"
       minimum = 4
-      maximum = 16
+      maximum = 100
     }
   }
 
@@ -55,7 +55,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "custom-node-pool"
   location   = var.region
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = 2
 
   node_config {
     preemptible  = true
