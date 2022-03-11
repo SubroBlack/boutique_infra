@@ -3,31 +3,24 @@ module "gke_cluster" {
   cluster_name = var.cluster_name
   region = var.region
   project_1 = var.project_1
-
 }
 
-module "redis" {
-  source = "../../modules/Redis"
+module "vpc2" {
+  source = "../../modules/vpc_2"
   region = var.region
-  project_2 = var.project_2
-  
+  project_2 = var.project_2 
 }
 
 
-resource "google_compute_network_peering" "gke-redis" {
+resource "google_compute_network_peering" "gke-vpc2" {
   name = var.peer_name_1
   network  = module.gke_cluster.vpc_gke_output.self_link
-  peer_network = module.redis.vpc_redis_output.self_link
+  peer_network = module.vpc2.vpc2_output.self_link
 }
 
 
-resource "google_compute_network_peering" "redis-gke" {
+resource "google_compute_network_peering" "vpc2-gke" {
   name =  var.peer_name_2
-  network = module.redis.vpc_redis_output.self_link
+  network = module.vpc2.vpc2_output.self_link
   peer_network  = module.gke_cluster.vpc_gke_output.self_link
 }
-
-
-
-
-
