@@ -1,3 +1,4 @@
 profiles/gke/terraform.tfstat
 profiles/gke/.terraform
 profiles/gke/variables.tfvars
+profiles/gke/.terraform.lock.hcl

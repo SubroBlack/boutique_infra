@@ -60,3 +60,8 @@ The aim is to get exposed to as many architecture, security and implementation b
 
 # Sprint 2 accomplishment
 
+- Private k8s Cluster created with terraform and automated with pipeline
+
+- Microservice pipelines created and services deployed with pipeline and skaffold
+
+- Microservices deployed to specific namespaces
