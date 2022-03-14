@@ -5,9 +5,8 @@ metadata:
 ---
 kind: Namespace
 metadata: 
-  name: test-2
+  name: test-1
 ---
 kind: Namespace
 metadata: 
   name: test-2
-  
