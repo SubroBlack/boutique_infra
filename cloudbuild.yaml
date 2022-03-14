@@ -82,7 +82,7 @@ steps:
 - id: 'create namespace'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
-  args:  ['./bash.sh', '$BRANCH_NAME']
+  args:  [./bash.sh', '$BRANCH_NAME']
   timeout: 3600s 
  
 #- id: 'create namespace'
