@@ -2,7 +2,7 @@
 gcloud components install kubectl
 apt-get update
 apt-get install -y jq
-BRANCH_NAME = $1
+BRANCH_NAME = ${1}
 echo $BRANCH_NAME
 
 if [ -d "env/$BRANCH_NAME/" ]; then
