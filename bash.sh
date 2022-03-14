@@ -1,7 +1,7 @@
 #!/bin/bash
 gcloud components install kubectl
 apt-get update
-apt-get install jq
+apt-get install -y jq
 
 if [ -d "env/$BRANCH_NAME/" ]; then
     gcloud container clusters get-credentials gke-boutique-cluster --region europe-north1 --project team-2-a
