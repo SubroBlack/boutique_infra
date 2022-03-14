@@ -82,23 +82,3 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     ]
   }
 }
-
-/*
-# Namespace in the cluster for respective env virtual clusters
-resource "kubernetes_namespace" "env" {
-  metadata {
-    annotations = {
-      name = var.env
-    }
-
-    labels = {
-      env = var.env
-    }
-
-    name = var.env
-  }
-  depends_on = [
-    var.network
-  ]
-}
-*/

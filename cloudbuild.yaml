@@ -43,5 +43,5 @@ steps:
       cd profiles/infra
       terraform apply -var-file="../../env/dev.tfvars" -auto-approve -lock=false
     fi
-  timeout: 1200s
-timeout: 1200s
+  timeout: 1800s
+timeout: 1800s

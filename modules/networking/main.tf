@@ -34,7 +34,9 @@ resource "google_compute_firewall" "gke" {
     protocol = "tcp"
     ports    = ["0-65535"]
   }
-
+  depends_on = [
+    google_compute_network.GKE_network
+  ]
 }
 
 
@@ -45,6 +47,9 @@ resource "google_compute_global_address" "Redis_range" {
   address_type  = "INTERNAL"
   prefix_length = 16
   network       = google_compute_network.GKE_network.id
+  depends_on = [
+    google_compute_network.GKE_network
+  ]
 }
 
 # Private Services Access between GKE Network and Redis Network

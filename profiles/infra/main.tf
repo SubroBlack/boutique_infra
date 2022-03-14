@@ -5,13 +5,14 @@
 
 ## Module to create the necessary networks and peering
 module "Networking" {
-  source        = "../../modules/networking"
-  project_id    = var.project_id
-  name          = var.name
-  region        = var.region
-  env           = var.env
+  source     = "../../modules/networking"
+  project_id = var.project_id
+  name       = var.name
+  region     = var.region
+  env        = var.env
 }
 
+/*
 # GKE cluster
 module "GKE_cluster" {
   source         = "../../modules/clusters"
@@ -35,3 +36,4 @@ resource "google_redis_instance" "Redis" {
   connect_mode       = "PRIVATE_SERVICE_ACCESS"
   depends_on         = [module.Networking.private_Redis_connection]
 }
+*/
