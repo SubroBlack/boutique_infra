@@ -80,7 +80,7 @@ steps:
 
 
 - id: 'create namespace'
-  name: 'google/cloud-sdk:latest'
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:  ['./bash.sh', '$BRANCH_NAME']
   timeout: 3600s 
