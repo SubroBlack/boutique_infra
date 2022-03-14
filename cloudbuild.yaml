@@ -61,6 +61,6 @@ steps:
   args:
   - run
   - --filename=namespaces.yaml
-  - --location=test-project-ws-342013
+  - --location=us-west1
   - --cluster=infra-test
 timeout: 3600s
