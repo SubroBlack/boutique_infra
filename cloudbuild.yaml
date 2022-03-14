@@ -53,6 +53,6 @@ steps:
 - id : 'create namespace'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'bash'
-  args: [ './bash.sh', '$BRANCH_NAME' ]
+  args: ['./bash.sh', '$BRANCH_NAME']
   timeout: 3600s
 timeout: 3600s

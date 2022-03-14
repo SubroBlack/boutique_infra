@@ -1,6 +1,6 @@
 #!/bin/bash
 gcloud components install kubectl
-if [ -d "profiles/gke/" ]; then
+if [ $BRANCH_NAME = wahid ]; then
     gcloud container clusters get-credentials infra-test --region us-west1 --project test-project-ws-342013
     namespaceStatus=$(kubectl get ns $BRANCH_NAME -o json | jq .status.phase -r)
     if [ "$namespaceStatus"=="Active" ]
