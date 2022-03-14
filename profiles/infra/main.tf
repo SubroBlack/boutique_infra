@@ -12,7 +12,7 @@ module "Networking" {
   env        = var.env
 }
 
-/*
+
 # GKE cluster
 module "GKE_cluster" {
   source         = "../../modules/clusters"
@@ -36,4 +36,3 @@ resource "google_redis_instance" "Redis" {
   connect_mode       = "PRIVATE_SERVICE_ACCESS"
   depends_on         = [module.Networking.private_Redis_connection]
 }
-*/
