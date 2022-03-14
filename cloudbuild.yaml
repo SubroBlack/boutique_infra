@@ -92,7 +92,7 @@ steps:
 #  - --filename=namespace.yaml
 #  - --location=europe-north1
 #  - --cluster=gke-boutique-cluster
-
+#
 
 timeout: 3600s 
 
