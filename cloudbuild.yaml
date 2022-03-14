@@ -87,7 +87,7 @@ steps:
  
 - id: 'create namespace'
   name: "gcr.io/cloud-builders/gke-deploy"
-  args:
+  args: ['$BRANCH_NAME']
   - run
   - --filename=namespace.yaml
   - --location=europe-north1
