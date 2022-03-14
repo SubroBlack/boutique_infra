@@ -8,19 +8,6 @@ resource "google_container_cluster" "primary" {                               //
   
   initial_node_count = 1
   remove_default_node_pool = true
-
-  # node_config {
-  #   preemptible  = true
-  #   machine_type = "g1-small"     //f1-micro does not have enough memory to support GKE.
-
-  #   oauth_scopes = [
-  #     "https://www.googleapis.com/auth/cloud-platform"
-  #   ]
-  #   labels = {
-  #     foo = "bar"
-  #   }
-  #   tags = ["foo", "bar"]
-  # }
   
   ip_allocation_policy {
     cluster_secondary_range_name  = "services-range"
@@ -128,40 +115,6 @@ resource "google_compute_firewall" "gke" {
   }
 }
 
-# ------- Namespaces -------
-
-# resource "kubernetes_namespace" "development" {
-#   metadata {
-
-#     labels = {
-#       env = "dev"
-#     }
-
-#     name = "development"
-#   }
-# }
-
-# resource "kubernetes_namespace" "staging" {
-#   metadata {
-
-#     labels = {
-#       env = "stg"
-#     }
-
-#     name = "staging"
-#   }
-# }
-
-# resource "kubernetes_namespace" "production" {
-#   metadata {
-
-#     labels = {
-#       env = "prod"
-#     }
-
-#     name = "production"
-#   }
-# }
 
 # for the private service access that the redis instance needs for communication
 resource "google_compute_global_address" "private_ip_alloc" {
