@@ -60,7 +60,8 @@ steps:
   name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
-  - --filename=namespaces.yaml
+  # - --filename=namespaces.yaml
+  - --namespace=$BRANCH_NAME
   - --location=us-west1
   - --cluster=infra-test
 timeout: 3600s
