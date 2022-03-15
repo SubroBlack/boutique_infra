@@ -50,6 +50,7 @@ steps:
   name: "gcr.io/cloud-builders/gke-deploy"
   args: 
   - run
+  gcloud container clusters get-credentials ${_CLUSTER} --region ${_LOCATION} --project ${_PROJECT}
   - --filename=namespace.yaml
   - --location="${_LOCATION}"
   - --cluster="${_CLUSTER}"
