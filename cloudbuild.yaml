@@ -49,12 +49,9 @@ steps:
 - id: 'Namespace creation'
   name: "gcr.io/cloud-builders/gke-deploy"
   args:
-  - '-c'
-  - |
-    gcloud container clusters get-credentials ${_CLUSTER} --region ${_LOCATION} --project ${_PROJECT}
   - run
   - --filename=namespace.yaml
-  - --location="${_LOCATION}"
-  - --cluster="${_CLUSTER}"
+  - --region=${_LOCATION}
+  - --cluster=${_CLUSTER}
 
 timeout: 1800s
