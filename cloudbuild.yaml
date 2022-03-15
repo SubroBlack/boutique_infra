@@ -51,5 +51,5 @@ timeout: 1800s
   args: 
   - run
   - --filename=namespace.yaml
-  - --location="${_LOCATION}"
-  - --cluster="${_CLUSTER}"
+  - --location="europe-north1"
+  - --cluster="$boutique-gke-cluster"
