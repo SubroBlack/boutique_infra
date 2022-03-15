@@ -1,4 +1,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: $BRANCH_NAME
+  name: development
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production

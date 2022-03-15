@@ -79,20 +79,20 @@ steps:
 # [END tf-apply]
 
 
-- id: 'create namespace'
-  name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args:  ['./bash.sh', '$BRANCH_NAME']
-  timeout: 3600s 
- 
 #- id: 'create namespace'
-#  name: "gcr.io/cloud-builders/gke-deploy"
-#  args: ['./namespace.yaml', '$BRANCH_NAME']
-#  - run
-#  - --filename=namespace.yaml
-#  - --location=europe-north1
-#  - --cluster=gke-boutique-cluster
-#
+#  name: 'gcr.io/cloud-builders/gcloud'
+#  entrypoint: 'bash'
+#  args:  ['./bash.sh', '$BRANCH_NAME']
+#  timeout: 3600s 
+ 
+- id: 'create namespace'
+  name: "gcr.io/cloud-builders/gke-deploy"
+  args: 
+  - run
+  - --filename=namespace.yaml
+  - --location=europe-north1
+  - --cluster=gke-boutique-cluster
+
 
 timeout: 3600s 
 
