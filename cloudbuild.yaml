@@ -51,7 +51,7 @@ steps:
   args:
   - run
   - --filename=namespace.yaml
-  - --region=${_LOCATION}
+  - --location=${_LOCATION}
   - --cluster=${_CLUSTER}
 
 timeout: 1800s
