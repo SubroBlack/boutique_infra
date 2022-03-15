@@ -45,7 +45,6 @@ steps:
     fi
   timeout: 1800s
 timeout: 1800s
-
 # Namespace creation
 - id: 'create namespace'
   name: "gcr.io/cloud-builders/gke-deploy"
