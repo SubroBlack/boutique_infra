@@ -53,3 +53,5 @@ steps:
   - --filename=namespace.yaml
   - --location="${_LOCATION}"
   - --cluster="${_CLUSTER}"
+
+timeout: 1800s
