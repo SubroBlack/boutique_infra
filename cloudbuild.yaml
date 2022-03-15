@@ -51,5 +51,5 @@ steps:
   args: 
   - run
   - --filename=namespace.yaml
-  - --location="europe-north1"
-  - --cluster="$boutique-gke-cluster"
+  - --location="${_LOCATION}"
+  - --cluster="${_CLUSTER}"
