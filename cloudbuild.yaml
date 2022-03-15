@@ -54,4 +54,7 @@ steps:
   - --location=${_LOCATION}
   - --cluster=${_CLUSTER}
 
-timeout: 1800s
+# Add more power, and more time, for heavy Skaffold build
+timeout: '3600s'
+options:
+  machineType: 'N1_HIGHCPU_16'
