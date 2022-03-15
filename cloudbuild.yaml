@@ -46,7 +46,7 @@ steps:
   timeout: 1800s
 timeout: 1800s
 # Namespace creation
-- id: 'create namespace'
+- id: 'Namespace creation'
   name: "gcr.io/cloud-builders/gke-deploy"
   args: 
   - run
