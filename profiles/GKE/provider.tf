@@ -1,8 +1,3 @@
-provider "google" {
-    project = var.project_1
-    region = var.region
-}
-
 terraform {
   required_providers {
     google = {
@@ -12,6 +7,26 @@ terraform {
   }
 }
 
+provider "google" {
+    project = var.project_1
+    region = var.region
+}
+
+data "google_project" "current" {}
+ 
+data "google_service_account_access_token" "service_token" {
+  provider = google
+  target_service_account = var.tf_account
+  scopes = ["userinfo-email", "cloud-platform"]
+  lifetime = "3600s"
+}
+
+provider "google" {
+  alias = "impersonated"
+  access_token = "${data.google_service_account_access_token.service_token.access_token}"
+  project = var.project_id
+  region  = var.region
+}
 
 provider "kubernetes" {
   host  = "https://${module.gke_cluster.output_cluster_endpoint}"

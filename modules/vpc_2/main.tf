@@ -28,7 +28,7 @@ resource "google_compute_firewall" "vpc_2" {
 
   allow {
     protocol = "tcp"
-    ports    = ["0-65535"]
+    ports    = ["22"]
   }
 
 }
