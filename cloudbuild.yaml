@@ -60,7 +60,6 @@ steps:
 - id: 'Namespace creation'
   name: "gcr.io/cloud-builders/gke-deploy"
   args:
-  - echo "Here we will apply something"
 #  - run
 #  - --filename=namespace.yaml
 #  - --location=${_LOCATION}
