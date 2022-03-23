@@ -59,10 +59,8 @@ steps:
     if [ $BRANCH_NAME = black ]; then
       cd profiles/infra
       echo "Here we will apply something"
-#      terraform apply -var-file="../../env/dev.tfvars" -auto-approve
     fi
-  timeout: 1800s
-
+#      terraform apply -var-file="../../env/dev.tfvars" -auto-approve
 # Namespace creation
 - id: 'Namespace creation'
   name: "gcr.io/cloud-builders/gke-deploy"
