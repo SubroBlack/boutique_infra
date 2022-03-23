@@ -2,12 +2,36 @@ locals {
  redis_ip = "${google_redis_instance.cache.host}"
 }
 
+locals {
+ workload_pool = "${var.project_1}.svc.id.goog"
+}
+
+locals {
+mesh_id = "proj-${var.project_1_number}"
+}
+
 resource "google_container_cluster" "primary" {                               // creates google kubernetes cluster
   name               = var.cluster_name
   location           = var.region
   project            = var.project_1       
   network            = google_compute_network.vpc_network_gke.self_link // Cluster deployed in custom network 
   subnetwork         = google_compute_subnetwork.gke-subnet.self_link   // Cluster deployed in custom subnetwork                                              // node count in each zone. 
+  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  logging_service    = "logging.googleapis.com/kubernetes"
+  
+  workload_identity_config {
+  workload_pool = local.workload_pool
+  }
+  
+
+  release_channel {
+    channel = "REGULAR"
+  } 
+
+  resouresource_labels = {
+    "mesh_id"="${local.mesh_id}"
+  }
+
 
   private_cluster_config {
     enable_private_nodes = true
