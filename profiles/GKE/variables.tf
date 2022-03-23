@@ -2,10 +2,12 @@ variable "cluster_name" {
   type = string
   description = "Name of the gke cluster"
 }
+
 variable "region" {
   type = string
   description = "Name of the cluster region"
 }
+
 variable "project_1" {
   type = string
   description = "id of the project for deployment"
@@ -26,11 +28,12 @@ variable "peer_name_2" {
   type = string
 }
 
-
 variable "zone" {
   description = "network zone"
   type = string
 }
 
-
-
+variable "tf_account" {
+  type        = string
+  description = "Service account name"
+}

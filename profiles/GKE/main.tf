@@ -11,13 +11,11 @@ module "vpc2" {
   project_2 = var.project_2 
 }
 
-
 resource "google_compute_network_peering" "gke-vpc2" {
   name = var.peer_name_1
   network  = module.gke_cluster.vpc_gke_output.self_link
   peer_network = module.vpc2.vpc2_output.self_link
 }
-
 
 resource "google_compute_network_peering" "vpc2-gke" {
   name =  var.peer_name_2

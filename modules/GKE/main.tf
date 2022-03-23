@@ -87,6 +87,7 @@ resource "google_compute_subnetwork" "gke-subnet" {
   ip_cidr_range = "10.2.0.0/16"
   region        = var.region
   network       = google_compute_network.vpc_network_gke.name
+  private_ip_google_access   = true
   secondary_ip_range {
     range_name    = "services-range"
     ip_cidr_range = "10.24.0.0/20"
@@ -115,12 +116,10 @@ resource "google_compute_firewall" "gke" {
 
   allow {
     protocol = "tcp"
-    ports    = ["0-65535"]
+    ports    = ["80", "443"]
   }
 
 }
-
-
 
 /* resource "kubernetes_namespace" "development" {
   metadata {
