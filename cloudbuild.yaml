@@ -6,6 +6,23 @@ steps:
   - '-c'
   - | 
     echo "***********************"
+    echo "Welcome, Can I have the password please?"
+    echo "$$password"
+    echo "***********************"
+  secretEnv: ['password']
+  availableSecrets:
+    secretManager:
+    - versionName: projects/${_PROJECT}/secrets/password/versions/1
+      env: 'password'
+# Start
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+    echo "***********************"
     echo "The Commit was made in the branch: "
     echo "$BRANCH_NAME"
     echo "***********************"
@@ -41,7 +58,7 @@ steps:
   - |
     if [ $BRANCH_NAME = black ]; then
       cd profiles/infra
-      terraform apply -var-file="../../env/dev.tfvars" -auto-approve -lock=false
+#      terraform apply -var-file="../../env/dev.tfvars" -auto-approve
     fi
   timeout: 1800s
 
@@ -50,11 +67,11 @@ steps:
   name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
-  - --filename=namespace.yaml
-  - --location=${_LOCATION}
-  - --cluster=${_CLUSTER}
+#  - --filename=namespace.yaml
+#  - --location=${_LOCATION}
+#  - --cluster=${_CLUSTER}
 
 # Add more power, and more time, for heavy Skaffold build
 timeout: '3600s'
 options:
-  machineType: 'N1_HIGHCPU_8'
+  machineType: ''E2_HIGHCPU_32'
