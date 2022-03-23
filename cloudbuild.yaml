@@ -53,17 +53,17 @@ steps:
   - |
     if [ $BRANCH_NAME = black ]; then
       cd profiles/infra
-      echo "Here we will apply something"
+      terraform apply -var-file="../../env/dev.tfvars" -auto-approve
     fi
-#      terraform apply -var-file="../../env/dev.tfvars" -auto-approve
+
 # Namespace creation
 - id: 'Namespace creation'
   name: "gcr.io/cloud-builders/gke-deploy"
   args:
-#  - run
-#  - --filename=namespace.yaml
-#  - --location=${_LOCATION}
-#  - --cluster=${_CLUSTER}
+  - run
+  - --filename=namespace.yaml
+  - --location=${_LOCATION}
+  - --cluster=${_CLUSTER}
 
 availableSecrets:
   secretManager:
@@ -72,5 +72,5 @@ availableSecrets:
 
 # Add more power, and more time, for heavy Skaffold build
 timeout: '3600s'
-#options:
-#  machineType: 'E2_HIGHCPU_32'
+options:
+  machineType: 'E2_HIGHCPU_32'
