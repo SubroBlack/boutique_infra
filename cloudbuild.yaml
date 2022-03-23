@@ -15,7 +15,6 @@ steps:
     - versionName: projects/${_PROJECT}/secrets/password/versions/1
       env: 'password'
 # Start
-steps:
 - id: 'branch name'
   name: 'alpine'
   entrypoint: 'sh'  
