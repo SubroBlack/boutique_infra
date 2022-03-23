@@ -28,6 +28,11 @@ variable "peer_name_2" {
   type = string
 }
 
+# variable "project_1_number" {
+#   type = string
+#   description = "first project number"
+# }
+
 variable "zone" {
   description = "network zone"
   type = string

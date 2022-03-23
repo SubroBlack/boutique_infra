@@ -3,6 +3,8 @@ module "gke_cluster" {
   cluster_name = var.cluster_name
   region = var.region
   project_1 = var.project_1
+  # project_1_number = var.project_1_number
+
 }
 
 module "vpc2" {
