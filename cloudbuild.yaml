@@ -1,5 +1,5 @@
 steps:
-- id: 'branch name'
+- id: 'Masked Ball'
   name: 'alpine'
   entrypoint: 'sh'  
   args: 
@@ -75,5 +75,5 @@ steps:
 
 # Add more power, and more time, for heavy Skaffold build
 timeout: '3600s'
-options:
-  machineType: 'E2_HIGHCPU_32'
+#options:
+#  machineType: 'E2_HIGHCPU_32'
