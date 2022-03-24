@@ -116,12 +116,6 @@ resource "google_compute_subnetwork" "gke-subnet" {
   }
 }
 
-/* resource "google_compute_subnetwork" "gke-master_network-private-subnet" {
-  name          = "gke-master_network-private-subnet"
-  ip_cidr_range = "10.5.6.0/28"
-  region        = "us-west1"
-  network       = google_compute_network.vpc_network_gke.name
-} */
 
 resource "google_compute_firewall" "gke" {
   name    = "ingress-firewall-gke"
@@ -139,43 +133,6 @@ resource "google_compute_firewall" "gke" {
 
 }
 
-/* resource "kubernetes_namespace" "development" {
-  metadata {
-
-    labels = {
-      env = "dev"
-    }
-
-    name = "development"
-  }
-}
-
-resource "kubernetes_namespace" "staging" {
-  metadata {
-
-    labels = {
-      env = "stg"
-    }
-
-    name = "staging"
-  }
-}
-
-resource "kubernetes_namespace" "production" {
-  metadata {
-
-    labels = {
-      env = "prod"
-    }
-
-    name = "production"
-  }
-} */
-
-#resource for vm with nutcracker startup script 
-#in nutcracker startup script specify ip address
-
-#the nutcracker vm depends on the redis instance ip 
 
 # for the private service access that the redis instance needs for communication
 resource "google_compute_global_address" "private_ip_alloc" {

@@ -78,12 +78,6 @@ steps:
   timeout: 1200s
 # [END tf-apply]
 
-
-#- id: 'create namespace'
-#  name: 'gcr.io/cloud-builders/gcloud'
-#  entrypoint: 'bash'
-#  args:  ['./bash.sh', '$BRANCH_NAME']
-#  timeout: 3600s 
  
 - id: 'create namespace'
   name: "gcr.io/cloud-builders/gke-deploy"
