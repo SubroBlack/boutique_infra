@@ -1,0 +1,2 @@
+profiles/GKE/.terraform/
+profiles/GKE/.terraform.lock.hcl

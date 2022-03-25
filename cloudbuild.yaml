@@ -1,0 +1,94 @@
+steps:
+- id: 'branch name'
+  name: 'alpine'
+  entrypoint: 'sh'  
+  args: 
+  - '-c'
+  - | 
+      echo "***********************"
+      echo "$BRANCH_NAME"
+      echo "***********************"
+# [START tf-init]
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      if [ -d "env/$BRANCH_NAME/" ]; then
+        cd profiles/GKE
+        terraform init
+      else
+        for dir in env/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${env#*/}
+          echo ""
+          echo "*************** TERRAFORM INIT ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform init || exit 1
+          cd ../../
+        done
+      fi 
+# [STOP tf-init]      
+
+# [START tf-plan]
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      if [ -d "env/$BRANCH_NAME/" ]; then
+        cd profiles/GKE
+        terraform plan -var-file="./../../env/$BRANCH_NAME/$BRANCH_NAME.tfvars" 
+      else
+        for dir in env/*/
+        do 
+          cd ${dir}   
+          env=${dir%*/}
+          env=${env#*/}  
+          echo ""
+          echo "*************** TERRAFOM PLAN ******************"
+          echo "******* At environment: ${env} ********"
+          echo "*************************************************"
+          terraform plan -var-file="./../../env/$BRANCH_NAME/$BRANCH_NAME.tfvars"|| exit 1
+          cd ../../
+        done
+      fi 
+# [END tf-plan]
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      if [ -d "env/$BRANCH_NAME/" ]; then
+        cd profiles/GKE     
+        terraform apply -var-file="./../../env/$BRANCH_NAME/$BRANCH_NAME.tfvars" -auto-approve
+      else
+        echo "***************************** SKIPPING APPLYING *******************************"
+        echo "Branch '$BRANCH_NAME' does not represent an oficial environment."
+        echo "*******************************************************************************"
+      fi
+  timeout: 1200s
+# [END tf-apply]
+
+ 
+- id: 'create namespace'
+  name: "gcr.io/cloud-builders/gke-deploy"
+  args: 
+  - run
+  - --filename=namespace.yaml
+  - --location=europe-north1
+  - --cluster=gke-boutique-cluster
+
+
+timeout: 3600s 
+
+
+##
